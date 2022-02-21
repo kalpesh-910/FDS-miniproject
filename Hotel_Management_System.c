@@ -15,7 +15,6 @@ struct node
 struct node *headc = NULL, *newnode, *tailc = NULL;
 struct node *heada = NULL, *taila = NULL;
 struct node *head_s;
-
 struct node *createmenu(struct node *head, int d, char foodname[25], float price);
 struct node *createorder(struct node *head, int d, int quantity);
 void displayMenu(struct node *head);
@@ -60,8 +59,8 @@ int main()
         printf("\n=========================================================\n");
         printf("           WELCOME TO TAJ HOTEL\n");
         printf("==========================================================\n\n\n");
-        printf("          1. MANAGER SECTION   \n");
-        printf("          2. CUSTOMER SECTION \n");
+        printf("          1. MANAGER DESK   \n");
+        printf("          2. CUSTOMER DESK \n");
         printf("          3. Exit \n\n");
         printf("          Enter Your Choice : ");
         scanf("%d", &choice);
@@ -156,7 +155,7 @@ struct node *createorder(struct node *head, int d, int quantity)
     }
     else
     {
-        printf("          This item is not present in the menu!\n");
+        printf("          This food item is not available in the menu card!\n");
     }
 
     return headc;
@@ -178,7 +177,7 @@ void displayMenu(struct node *head)
     rewind(fp);
 
     printf("\n");
-    printf("        Sr.no.\t    FoodName  \t       Rate\n");
+    printf("        Sr.no.\t    FoodName  \t       Price\n");
     printf("     -----------------------------------------------------\n");
     if (fp == NULL)
         printf("\nError");
@@ -196,14 +195,13 @@ void displayOrder(struct node *head)
     struct node *temp1 = head;
     if (temp1 == NULL)
     {
-        printf("\n          List is empty!!\n\n");
+        printf("\n          No Order!!\n\n");
     }
     else
     {
         printf("\n");
-        printf("        Sr.no.\t    FoodName  \t    Quantity\tRate\n");
+        printf("        Sr.no.\t    FoodName  \t    Quantity\tPrice\n");
         printf("     -----------------------------------------------------\n");
-        
 
         while (temp1 != NULL)
         {
@@ -283,7 +281,7 @@ struct node *delete (int dt, struct node *head, struct node *tail)
     int a;
     if (head == NULL)
     {
-        printf("\n          List is empty\n");
+        printf("\n          No order available!!\n");
     }
     else
     {
@@ -335,7 +333,7 @@ struct node *deleteM(int dt, struct node *head, struct node *tail)
     int a;
     if (head == NULL)
     {
-        printf("\n          List is empty\n");
+        printf("\n          No Order Available\n");
     }
     else
     {
@@ -374,7 +372,7 @@ struct node *deleteM(int dt, struct node *head, struct node *tail)
 
 int deleteMenu()
 {
-    printf("\n          Enter serial no. of the food item which is to be deleted: ");
+    printf("\n          Enter Sr.No. of the food item which you want to delete: ");
 
     int num;
     int a = 0;
@@ -428,9 +426,9 @@ int deleteOrder()
 {
 
     int num, Qty;
-    printf("\n          Enter serial no. of the food item which is to be deleted: ");
+    printf("\n          Enter Sr.No. of the food item which you want to delete: ");
     scanf("%d", &num);
-    printf("\n          Enter quantity want to delete : ");
+    printf("\n          Enter quantity want to delete: ");
     scanf("%d", &Qty);
 
     struct node *temp = headc;
@@ -498,14 +496,14 @@ struct node *deleteList(struct node *head)
 void Manager()
 {
     printf("\n----------------------------------------------\n");
-    printf("          MANAGER SECTION\n");
+    printf("          MANAGER DESK\n");
     printf("----------------------------------------------\n");
     while (1)
     {
-        printf("\n        1. View total sales\n");
-        printf("          2. Add new items in the order menu\n");
-        printf("          3. Delete items from the order menu\n");
-        printf("          4. Display order menu\n");
+        printf("\n        1. View total orders\n");
+        printf("          2. Add new food items in the menu card\n");
+        printf("          3. Delete food items from the menu card\n");
+        printf("          4. Display menu card\n");
         printf("          5. Back To Main Menu \n\n");
         printf("          Enter Your Choice : ");
 
@@ -518,13 +516,13 @@ void Manager()
         switch (opt)
         {
         case 1:
-            printf("\n======================= Total Sales =======================\n");
+            printf("\n======================= Total Orders =======================\n");
 
             displayOrder(head_s);
             break;
         case 2:
 
-            printf("\n          Enter serial no. of the food item: ");
+            printf("\n          Enter Sr.No of the food item: ");
             int num, flag = 0;
             char name[50];
             float price;
@@ -536,7 +534,7 @@ void Manager()
             {
                 if (temp->d == num)
                 {
-                    printf("\n          Food item with given serial number already exists!!\n\n");
+                    printf("\n         This food item already exists in menu card!!\n\n");
                     flag = 1;
                     break;
                 }
@@ -546,7 +544,7 @@ void Manager()
             if (flag == 1)
                 break;
 
-            printf("          Enter food item name: ");
+            printf("          Enter name of food item: ");
             scanf("%s", name);
             printf("          Enter price: ");
             scanf("%f", &price);
@@ -558,17 +556,17 @@ void Manager()
                 printf("\nError");
             else
                 fprintf(fp, "%d \t%s \t%f\n", num, name, price);
-            printf("\n          New food item added to the list!!\n\n");
+            printf("\n          New food item has been added to the menu card!!\n\n");
             fclose(fp);
             break;
         case 3:
             if (deleteMenu())
             {
-                printf("\n======================= Updated list of food items menu =======================\n");
+                printf("\n======================= Updated menu card =======================\n");
                 displayMenu(heada);
             }
             else
-                printf("\n          Food item with given serial number doesn't exist!\n\n");
+                printf("\n          Food item with given Sr.No doesn't available!!\n\n");
 
             break;
         case 4:
@@ -586,16 +584,16 @@ void Manager()
 void customer()
 {
     int flag = 0, j = 1;
-    char ch,l;
+    char ch, l;
     printf("\n----------------------------------------------\n");
-    printf("              CUSTOMER SECTION\n");
+    printf("              CUSTOMER DESK\n");
     printf("----------------------------------------------\n");
     int opt;
     do
     {
-        printf("\n          1. Place your order\n");
-        printf("          2. View your ordered items\n");
-        printf("          3. Delete an item from order\n");
+        printf("\n          1. Give order\n");
+        printf("          2. View ordered food items\n");
+        printf("          3. Cancel a food item from order\n");
         printf("          4. Display final bill\n");
         printf("          5. Back To Main Menu \n\n");
         printf("          Enter Your Choice : ");
@@ -607,31 +605,32 @@ void customer()
         switch (opt)
         {
         case 1:
-            do{
-            displayMenu(heada);
-            printf("\n          Enter number corresponding to the item you want to order: ");
-            int n;
-            scanf("%d", &n);
-            printf("          Enter quantity: ");
-            int quantity;
-            scanf("%d", &quantity);
-            headc = createorder(headc, n, quantity);
-            printf("          Do you want to continue your order (y/n) : ");
-            scanf(" %c",&l);
-            }while(l!='n');
+            do
+            {
+                displayMenu(heada);
+                printf("\n          Enter Sr.No of food item which you want to order: ");
+                int n;
+                scanf("%d", &n);
+                printf("          Enter quantity: ");
+                int quantity;
+                scanf("%d", &quantity);
+                headc = createorder(headc, n, quantity);
+                printf("          Do you want to continue your order (y/n) : ");
+                scanf(" %c", &l);
+            } while (l != 'n');
             break;
         case 2:
-            printf("\n========================== List of ordered items =========================\n");
+            printf("\n========================== Your Order =========================\n");
             displayOrder(headc);
             break;
         case 3:
             if (deleteOrder())
             {
-                printf("\n====================== Updated list of your ordered food items ========================\n");
+                printf("\n====================== Your Updated order ========================\n");
                 displayOrder(headc);
             }
             else
-                printf("\n          Food item with given serial number doesn't exist!!\n");
+                printf("\n          Food item with given Sr.No doesn't available!!\n");
             break;
         case 4:
             calculatetotsales();
